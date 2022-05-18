@@ -8,6 +8,7 @@ Currently, we do support a lot of operation :
 
 - Every operand for the [Complexes](complexe.c) type.
 - A lot of operand for the [Polynomes](polynomes.c) type, which is based on the Complexes type.
+- Some operand for both [squared](matricesquare.c) or not [Matrices](matrice.c).
 
 ### How to use
 **NOT WORKNG NOW**  
