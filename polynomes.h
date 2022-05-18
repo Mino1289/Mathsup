@@ -176,4 +176,13 @@ Polynome derivePolynome(Polynome *p);
  */
 int degrePolynome(Polynome p);
 
+/**
+ * @brief Evaluate the polynome at a complex number.
+ * 
+ * @param p Polynome - The polynome to evaluate.
+ * @param z Complex - The complex number to evaluate the polynome at.
+ * @return Complexe - The result of the evaluation?
+ */
+Complexe evaluatePolynome(Polynome p, Complexe z);
+
 #endif

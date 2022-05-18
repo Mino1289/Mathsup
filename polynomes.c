@@ -239,3 +239,11 @@ int degrePolynome(Polynome p) {
     }
     return degre;
 }
+
+Complexe evaluatePolynome(Polynome p, Complexe z) {
+    Complexe result = {0, 0};
+    for (int i = 0; i < p.nbMonomes; i++) {
+        result = addComplexe(result, multComplexebyComplexe(p.monomes[i].coeff, powerComplexe(z, p.monomes[i].degre)));
+    }
+    return result;
+}
