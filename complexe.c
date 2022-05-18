@@ -84,9 +84,31 @@ Complexe divComplexebyComplexe(Complexe z1, Complexe z2) {
 }
 
 Complexe powerComplexe(Complexe z, int n) {
-    double module = moduleComplexe(z), arg = argumentComplexe(z);
     Complexe z1;
-    z1.real = pow(module, n) * cos(n * arg);
-    z1.imag = pow(module, n) * sin(n * arg);
+    if (z.imag == 0) {
+        z1.real = pow(z.real, n);
+        z1.imag = 0;
+    } else if (z.real == 0) {
+        if (n % 4 == 0) {
+            z1.real = pow(z.imag, n);
+            z1.imag = 0;
+        } else if (n % 4 == 1) {
+            z1.real = 0;
+            z1.imag = pow(z.imag, n);
+        } else if (n % 4 == 2) {
+            z1.real = -pow(z.imag, n);
+            z1.imag = 0;
+        } else if (n % 4 == 3) {
+            z1.real = 0;
+            z1.imag = -pow(z.imag, n);
+        } else {
+            // we should never get here
+            fprintf(stderr, "ERROR: n mod 4 != 0/1/2/3\n");
+        }
+    } else {
+        double module = moduleComplexe(z), arg = argumentComplexe(z);
+        z1.real = pow(module, n) * cos(n * arg);
+        z1.imag = pow(module, n) * sin(n * arg);
+    }
     return z1;
 }
