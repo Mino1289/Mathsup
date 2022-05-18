@@ -1,7 +1,9 @@
-#ifndef COMPLEX_H
-#define COMPLEX_H
+#ifndef __COMPLEX_H__
+#define __COMPLEX_H__
 
-#include <lib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 /**
  * @brief Complexe structure,

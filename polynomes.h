@@ -1,8 +1,8 @@
-#ifndef POLYNOMES_H
-#define POLYNOMES_H
+#ifndef __POLYNOMES_H__
+#define __POLYNOMES_H__
 
 #include <complexe.h>
-#include <lib.h>
+#include <matrice.h>
 
 /**
  * @brief Struct representing a monome,
