@@ -55,9 +55,10 @@ double argumentComplexe(Complexe z) {
 }
 
 Complexe multComplexebyScalar(Complexe z, double scalar) {
-    z.real *= scalar;
-    z.imag *= scalar;
-    return z;
+    Complexe z1;
+    z1.real = z.real * scalar;
+    z1.imag = z.imag * scalar;
+    return z1;
 }
 
 Complexe multComplexebyComplexe(Complexe z1, Complexe z2) {
@@ -80,4 +81,12 @@ Complexe divComplexebyComplexe(Complexe z1, Complexe z2) {
     Complexe z = inverseComplexe(z2);    
     z = multComplexebyComplexe(z,z1);
     return z;
+}
+
+Complexe powerComplexe(Complexe z, int n) {
+    double module = moduleComplexe(z), arg = argumentComplexe(z);
+    Complexe z1;
+    z1.real = pow(module, n) * cos(n * arg);
+    z1.imag = pow(module, n) * sin(n * arg);
+    return z1;
 }
