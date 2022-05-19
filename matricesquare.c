@@ -1,5 +1,13 @@
 #include <matricesquare.h>
 
+Matrice eye(int order) {
+    Matrice m = createAndInitializeMatrice(order, order);
+    for (int i = 0; i < order; i++) {
+        m.table[i][i] = 1;
+    }
+    return m;
+}
+
 Matrice invertMatrice(Matrice m) {
     Matrice a = createAndInitializeMatrice(m.cols, m.cols*2);
     double ratio;
@@ -51,6 +59,41 @@ Matrice invertMatrice(Matrice m) {
     }
     freeMatrice(&a);
     return B;
+}
+
+Matrice powerMatrice(Matrice m, int n) {
+    if (n == 0) {
+        Matrice I = eye(m.cols);
+        return I;
+    }
+    Matrice a = copyMatrice(m);
+    
+    if (n == 1) {
+        return a;
+    }
+
+    int nbf;
+    int* f = factor(abs(n), &nbf);
+    
+    if (n < 0) {
+        a = invertMatrice(a);
+        for (int i = 0; i < nbf; i++) {
+            Matrice b = copyMatrice(a);
+            for (int j = 0; j < f[i]-1; j++) {
+                a = multMatrice(a, b);
+            }
+            freeMatrice(&b);
+        }
+        return a;
+    }
+    for (int i = 0; i < nbf; i++) {
+        Matrice b = copyMatrice(a);
+        for (int j = 0; j < f[i]-1; j++) {
+            a = multMatrice(a, b);
+        }
+        freeMatrice(&b);
+    }
+    return a;
 }
 
 double traceMatrice(Matrice m) {
