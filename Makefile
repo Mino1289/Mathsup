@@ -15,7 +15,7 @@ else
 	CLEANCMD = rm -rf *.o *.so *.exe *.dll main.txt
 endif
 
-LIBSOURCE = matricesquare matrice polynomes complexe 
+LIBSOURCE = matricesquare matrice polynomes complexe arithmetic
 LIBSOURCECFILE = $(LIBSOURCE:=.c)
 LIBSOURCEOFILE = $(LIBSOURCE:=.o)
 
