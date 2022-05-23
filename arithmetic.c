@@ -59,3 +59,50 @@ int* factor(int n, int *nbf) {
     *nbf = pos;
     return f;
 }
+
+int gcd(int a, int b) {
+    int m = a, n = b;
+    int r;
+    while (n != 0) {
+        r = m % n;
+        m = n;
+        n = r;
+    }
+    return m;
+}
+
+int lcm(int a, int b) {
+    return a * b / pgcd(a, b);
+}
+
+int imod(int a, int n) {
+    int x0 = 0;
+    int x1 = 1;
+    int y0 = 1;
+    int y1 = 0;
+    int q, tempx, tempy, c;
+    int b = n;
+    if (gcd(a, n) != 1) {
+        return 0;
+    }
+    do {
+        c = a;
+        q = (b - (b % a)) / a;
+        a = b % a;
+        b = c;
+
+        tempy = y0;
+        y0 = y1;
+        y1 = tempy - q * y1;
+
+        tempx = x0;
+        x0 = x1;
+        x1 = tempx - q * x1;
+    } while (a != 0);
+
+    int result = x0 % n; // take the result and could be negative, so we add n and it should be positive.
+    if (result < 0) {
+        return result + n;
+    }
+    return result;
+}

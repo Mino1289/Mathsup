@@ -34,5 +34,33 @@ Boolean isPrime(int n);
  */
 int* factor(int n, int* nbf);
 
+/**
+ * @brief Calculate the greatest common divisor of two numbers.
+ * Using the Euclidean algorithm.
+ * 
+ * @param a int - The first number
+ * @param b int - The second number
+ * @return int - The greatest common divisor of a and b
+ */
+int gcd(int a, int b);
+
+/**
+ * @brief Calculate the least common multiple of two numbers.
+ * 
+ * @param a int - The first number
+ * @param b int - The second number
+ * @return int - The least common multiple of a and b
+ */
+int lcm(int a, int b);
+
+/**
+ * @brief Calculate the modular inverse of a number.
+ * Calculate b such as b*a = 1 mod n
+ * 
+ * @param a int - The number to calculate the inverse of
+ * @param n int - The modulo
+ * @return int - The inverse of a mod n
+ */
+int imod(int a, int n);
 
 #endif
