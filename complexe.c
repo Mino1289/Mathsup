@@ -1,6 +1,9 @@
 #include <complexe.h>
 
-void printComplexe(Complexe z) {
+void printComplexe(Complexe z, Boolean wparenthesis) {
+    if (wparenthesis) {
+        printf("(");
+    }
     if (z.real != 0) {
         printf("%.1f", z.real);
     }
@@ -23,6 +26,9 @@ void printComplexe(Complexe z) {
             printf("%.1f*i", -z.imag);
         }
     }
+    if (wparenthesis) {
+        printf(")");
+    }    
 }
 
 Complexe addComplexe(Complexe z1, Complexe z2) {

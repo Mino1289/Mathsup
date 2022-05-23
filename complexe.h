@@ -17,12 +17,18 @@ typedef struct Complexe {
     double imag;
 } Complexe;
 
+typedef enum Boolean {
+    False = 0,
+    True = 1
+} Boolean;
+
 /**
  * @brief Print a complexe.
  * 
  * @param z Complexe - Complexe to print.
+ * @param wparenthesis Boolean - Print the complexe in parenthesis.
  */
-void printComplexe(Complexe z);
+void printComplexe(Complexe z, Boolean wparenthesis);
 
 /**
  * @brief Add two complexes.
