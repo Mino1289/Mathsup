@@ -4,6 +4,8 @@
 #include <complexe.h>
 #include <matrice.h>
 
+#define INDETERMINATE 'X'
+
 /**
  * @brief Struct representing a monome,
  * with a coefficient and a degree.
@@ -27,11 +29,6 @@ typedef struct Polynome {
     int nbMonomes;
     Monome *monomes;
 } Polynome;
-
-typedef enum Boolean {
-    False = 0,
-    True = 1
-} Boolean;
 
 /**
  * @brief Print a Monome.
@@ -159,6 +156,15 @@ Monome divMonomebyMonome(Monome m1, Monome m2);
  * @param r Polynome* - The rest.
  */
 void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r);
+
+/**
+ * @brief Calculate the greatest common divisor of two Polynomes.
+ * 
+ * @param p1 Polynome - The first polynome.
+ * @param p2 Polynome - The second polynome.
+ * @return Polynome - The greatest common divisor of the two Polynomes.
+ */
+Polynome gcdPolynome(Polynome p1, Polynome p2);
 
 /**
  * @brief Derive a Polynome.

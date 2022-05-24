@@ -2,15 +2,13 @@
 
 void printMonome(Monome m, Boolean first) {
     if (first) {
-        printComplexe(m.coeff);
+        printComplexe(m.coeff, !first);
     } else {
         printf(" + ");
-        printf("(");
-        printComplexe(m.coeff);
-        printf(")");
+        printComplexe(m.coeff, first);
     }
     if (m.degre != 0) {
-        printf("*X");
+        printf("*%c", INDETERMINATE);
     }
     if (m.degre > 1) {
         printf("^%d", m.degre);
@@ -194,7 +192,7 @@ void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
     inverseorderPolynome(&p2);
     
     Monome m = p2.monomes[0];
-    Polynome rst = p1;
+    Polynome rst = copyPolynome(p1);
 
     int size = p2.nbMonomes;
     Monome *monomes = (Monome*) malloc(size * sizeof(Monome)); // will go to q
@@ -216,6 +214,22 @@ void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
     inverseorderPolynome(&rst);
 
     *r = rst;
+}
+
+Polynome gcdPolynome(Polynome p1, Polynome p2) {
+    Polynome m = copyPolynome(p1), n = copyPolynome(p2);
+    Polynome r,q;
+    while (n.nbMonomes != 0) {
+        divPolynomebyPolynome(m, n, &q, &r);
+        freePolynome(&m);
+        m = copyPolynome(n);
+        freePolynome(&n);
+        n = copyPolynome(r);
+    }
+    freePolynome(&q);
+    freePolynome(&r);
+    freePolynome(&n);
+    return m;
 }
 
 Polynome derivePolynome(Polynome *p) {
