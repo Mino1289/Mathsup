@@ -72,7 +72,7 @@ int gcd(int a, int b) {
 }
 
 int lcm(int a, int b) {
-    return a * b / pgcd(a, b);
+    return a * b / gcd(a, b);
 }
 
 int imod(int a, int n) {
