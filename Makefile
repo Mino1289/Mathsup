@@ -1,9 +1,15 @@
 CXX = gcc
-CFLAGS = -Wall -Werror -Wextra -pedantic -g
-LIBSDIR = -L. -L/usr/lib
-INCLUDEDIR = -I. -I/usr/include
+CFLAGS = -Wall -Werror -Wextra -pedantic -fpic
+LIBSDIR = -L. 
+INCLUDEDIR = -I.
 
 LIBCORENAME = mathsup
+
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -ggdb -DDEBUG
+endif
 
 ifeq ($(OS), Windows_NT)
 	EXPORT = export.bat
@@ -12,10 +18,12 @@ ifeq ($(OS), Windows_NT)
 else
 	EXPORT = sh export.sh
 	LIBTARGET :=lib$(LIBCORENAME:=.so)
+	LIBSDIR += -L/usr/lib
+	INCLUDEDIR += -I/usr/include
 	CLEANCMD = rm -rf *.o *.so *.exe *.dll main.txt
 endif
 
-LIBSOURCE = matricesquare matrice polynomes complexe arithmetic
+LIBSOURCE = matricesquare matrice complexe polynomes arithmetic
 LIBSOURCECFILE = $(LIBSOURCE:=.c)
 LIBSOURCEOFILE = $(LIBSOURCE:=.o)
 

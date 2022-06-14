@@ -197,7 +197,7 @@ void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
     int size = p2.nbMonomes;
     Monome *monomes = (Monome*) malloc(size * sizeof(Monome)); // will go to q
     
-    for (int i = 0; i < p2.nbMonomes; i++) {
+    for (int i = 0; i < size; i++) {
         monomes[i] = divMonomebyMonome(rst.monomes[0], m);
         rst = subPolynomes(rst, multPolynomebyMonome(p2, monomes[i]));
         simplifyPolynome(&rst);
