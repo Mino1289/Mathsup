@@ -6,6 +6,11 @@
 #include <string.h>
 #include <math.h>
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define ABS(a) ((a) < 0 ? -(a) : (a))
+#define SWAP(a, b, T) { T tmp = a; a = b; b = tmp; }
+
 /**
  * @brief Complexe structure,
  * contains a real and an imaginary part. 
@@ -28,8 +33,11 @@ typedef enum Boolean {
  * 
  * @param z Complexe - Complexe to print.
  * @param wparenthesis Boolean - Print the complexe in parenthesis.
+ * @param wspace Boolean - Print space in the complexe.
+ * @param wfirstsign Boolean - Print the first sign of the complexe.
  */
-void printComplexe(Complexe z, Boolean wparenthesis);
+void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfirstsign);
+
 
 /**
  * @brief Add two complexes.

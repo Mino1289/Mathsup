@@ -1,29 +1,41 @@
 #include <complexe.h>
 
-void printComplexe(Complexe z, Boolean wparenthesis) {
+void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfirstsign) {
     if (wparenthesis) {
         printf("(");
     }
     if (z.real != 0) {
-        printf("%.1f", z.real);
+        if (wfirstsign){
+            printf("%.0f", z.real);
+        } else {
+            printf("%.0f", ABS(z.real));
+        }
     }
     if (z.imag > 0) {
         if (z.real != 0) {
-            printf(" + ");
+            if (!wspace) {
+                printf("+");
+            } else {
+                printf(" + ");
+            }
         }
         if (z.imag == 1) {
             printf("i");
         } else {
-            printf("%.1f*i", z.imag);
+            printf("%.0f*i", z.imag);
         }
     } else if (z.imag < 0) {
         if (z.real != 0) {
-            printf(" - ");
+            if (!wspace) {
+                printf("-");
+            } else {
+                printf(" - ");
+            }
         }
         if (z.imag == -1) {
             printf("i");
         } else {
-            printf("%.1f*i", -z.imag);
+            printf("%.0f*i", -z.imag);
         }
     }
     if (wparenthesis) {

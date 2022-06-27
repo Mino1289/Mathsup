@@ -3,6 +3,7 @@
 
 #include <complexe.h>
 #include <matrice.h>
+#include <matricesquare.h>
 
 #define INDETERMINATE 'X'
 
@@ -189,6 +190,8 @@ int degrePolynome(Polynome p);
  * @param z Complex - The complex number to evaluate the polynome at.
  * @return Complexe - The result of the evaluation?
  */
+Complexe evaluatePolynomeComplex(Polynome p, Complexe z);
+
 /**
  * @brief Evaluate the polynome by a Matrice.
  * 

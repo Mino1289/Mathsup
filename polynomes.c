@@ -2,10 +2,14 @@
 
 void printMonome(Monome m, Boolean first) {
     if (first) {
-        printComplexe(m.coeff, !first);
+        printComplexe(m.coeff, !first, True, True);
     } else {
-        printf(" + ");
-        printComplexe(m.coeff, first);
+        if (m.coeff.real > 0) {
+            printf(" + ");
+        } else {
+            printf(" - ");
+        }
+        printComplexe(m.coeff, (m.coeff.real != 0 && m.coeff.imag != 0), True, False);
     }
     if (m.degre != 0) {
         printf("*%c", INDETERMINATE);
@@ -47,6 +51,17 @@ void simplifyPolynome(Polynome *p) {
     //remove the monome with a coeff of 0
     for (int i = 0; i < p->nbMonomes; i++) {
         if (p->monomes[i].coeff.real == 0 && p->monomes[i].coeff.imag == 0) {
+            for (int j = i; j < p->nbMonomes - 1; j++) {
+                p->monomes[j] = p->monomes[j + 1];
+            }
+            p->nbMonomes--;
+            i--;
+        }
+    }
+    p->monomes = realloc(p->monomes, p->nbMonomes * sizeof(Monome));
+    //remove the monome with a negative degree
+    for (int i = 0; i < p->nbMonomes; i++) {
+        if (p->monomes[i].degre < 0) {
             for (int j = i; j < p->nbMonomes - 1; j++) {
                 p->monomes[j] = p->monomes[j + 1];
             }
@@ -174,7 +189,7 @@ Polynome multPolynomebyPolynome(Polynome p1, Polynome p2) {
             i++;
         }
     }
-    Polynome p = {size, monomes};
+    Polynome p = (Polynome) {size, monomes};
     simplifyPolynome(&p);
     return p;
 }
@@ -254,7 +269,7 @@ int degrePolynome(Polynome p) {
     return degre;
 }
 
-Complexe evaluatePolynome(Polynome p, Complexe z) {
+Complexe evaluatePolynomeComplex(Polynome p, Complexe z) {
     Complexe result = {0, 0};
     for (int i = 0; i < p.nbMonomes; i++) {
         result = addComplexe(result, multComplexebyComplexe(p.monomes[i].coeff, powerComplexe(z, p.monomes[i].degre)));

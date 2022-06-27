@@ -1,22 +1,21 @@
 #include <polynomes.h>
 #include <complexe.h>
 #include <matricesquare.h>
-// #include <mparser.h>
 
 
 int main(void) {
-    // Matrice M = createAndInitializeMatrice(3, 3);
-    // M.table[0][0] = 1;
-    // M.table[0][1] = 1;
-    // M.table[0][2] = 3;
-    // M.table[1][0] = 1;
-    // M.table[1][1] = 3;
-    // M.table[1][2] = -3;
-    // M.table[2][0] = -2;
-    // M.table[2][1] = -4;
-    // M.table[2][2] = -4;
+    Matrice M = createAndInitializeMatrice(3, 3);
+    M.table[0][0] = (Complexe) {1, 0};
+    M.table[0][1] = (Complexe) {1, -4};
+    M.table[0][2] = (Complexe) {3, 0};
+    M.table[1][0] = (Complexe) {1, 0};
+    M.table[1][1] = (Complexe) {3, 0};
+    M.table[1][2] = (Complexe) {3, 0};
+    M.table[2][0] = (Complexe) {2, 0};
+    M.table[2][1] = (Complexe) {4, 1};
+    M.table[2][2] = (Complexe) {4, -1};
 
-    // printMatrice(M);
+    printMatrice(M);
     // Matrice M2 = invertMatrice(M);
     // printMatrice(M2);
 
@@ -25,27 +24,20 @@ int main(void) {
 
     //gcd(x^4-3*x^2+2, x^3+x^2) = x+1
 
-    Polynome p = (Polynome){3, (Monome*) malloc(3 * sizeof(Monome))};
-    p.monomes[0] = (Monome){(Complexe) {1, 0}, 4};
-    p.monomes[1] = (Monome){(Complexe) {-3, 0}, 2};
-    p.monomes[2] = (Monome){(Complexe) {2, 0}, 0};
-
-    Polynome q = (Polynome){2, (Monome*) malloc(2 * sizeof(Monome))};
-    q.monomes[0] = (Monome){(Complexe) {1, 0}, 3};
-    q.monomes[1] = (Monome){(Complexe) {1, 0}, 2};
-
-    Polynome gcd = gcdPolynome(p, q);
-    printPolynome(p);
-    printPolynome(q);
-    printPolynome(gcd);
-
-    freePolynome(&p);
-    freePolynome(&q);
-    freePolynome(&gcd);
-
-    // Complexe z =  {1.0 ,  2.0};
+    Polynome p = (Polynome){5, (Monome*) malloc(5 * sizeof(Monome))};
+    p.monomes[0] = (Monome){(Complexe) {0, 1}, 4};
+    p.monomes[1] = (Monome){(Complexe) {1, 0}, 3};
+    p.monomes[2] = (Monome){(Complexe) {-3, 0}, 2};
+    p.monomes[3] = (Monome){(Complexe) {2, -5}, 1};
+    p.monomes[4] = (Monome){(Complexe) {2, 0}, 0};
     
-    // printComplexe(z, True);
+    printPolynome(p);
+    Matrice B = evaluatePolynomeMatrice(p, M);
+    Matrice A = multMatrice(M, B);
+    printMatrice(B);
+    printf("\n");
+    printMatrice(A);
+    freePolynome(&p);
 
 
     printf("\nHello, World!\n");
