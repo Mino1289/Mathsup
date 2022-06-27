@@ -9,7 +9,10 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define ABS(a) ((a) < 0 ? -(a) : (a))
-#define SWAP(a, b, T) { T tmp = a; a = b; b = tmp; }
+#define SWAP(a, b, T) { T tmp = a;\
+                        a = b;\
+                        b = tmp; \
+                    }
 
 /**
  * @brief Complexe structure,
@@ -38,6 +41,15 @@ typedef enum Boolean {
  */
 void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfirstsign);
 
+/**
+ * @brief Checks if a double is an integer.
+ * 
+ * @param x double - The double to check.
+ * @return Boolean 
+ */
+Boolean isdoubleint(double x){
+    return (x == (int)x);
+}
 
 /**
  * @brief Add two complexes.

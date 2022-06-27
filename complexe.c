@@ -6,9 +6,17 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
     }
     if (z.real != 0) {
         if (wfirstsign){
-            printf("%.0f", z.real);
+            if (isdoubleint(z.real)) {
+                printf("%d", (int)z.real);
+            } else {
+                printf("%.2f", z.real);
+            }
         } else {
-            printf("%.0f", ABS(z.real));
+            if (isdoubleint(z.real)) {
+                printf("%d", (int)ABS(z.real));
+            } else {
+                printf("%.2f", ABS(z.real));
+            }
         }
     }
     if (z.imag > 0) {
@@ -22,7 +30,11 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
         if (z.imag == 1) {
             printf("i");
         } else {
-            printf("%.0f*i", z.imag);
+            if (isdoubleint(z.imag)) {
+                printf("%d*i", (int)z.imag);
+            } else {
+                printf("%.2f*i", z.imag);
+            }
         }
     } else if (z.imag < 0) {
         if (z.real != 0) {
@@ -35,12 +47,20 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
         if (z.imag == -1) {
             printf("i");
         } else {
-            printf("%.0f*i", -z.imag);
+            if (isdoubleint(z.imag)) {
+                printf("%d*i", -(int)z.imag);
+            } else {
+                printf("%.2f*i", -z.imag);
+            }
         }
     }
     if (wparenthesis) {
         printf(")");
     }    
+}
+
+Boolean isdoubleint(double x){
+    return (x == (int)x);
 }
 
 Complexe addComplexe(Complexe z1, Complexe z2) {
