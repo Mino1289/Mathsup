@@ -261,3 +261,15 @@ Complexe evaluatePolynome(Polynome p, Complexe z) {
     }
     return result;
 }
+
+Matrice evaluatePolynomeMatrice(Polynome p, Matrice m) {
+    if (m.rows != m.cols) {
+        fprintf(stderr, "ERROR: Cannot evaluate a polynome on a non-square matrix\n");
+        return m;
+    }
+    Matrice result = createAndInitializeMatrice(m.rows, m.cols);
+    for (int i = 0; i < p.nbMonomes; i++) {
+        result = addMatrice(result, multMatricebyComplex(powerMatrice(m, p.monomes[i].degre), p.monomes[i].coeff));
+    }
+    return result;
+}

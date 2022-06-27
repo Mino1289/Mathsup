@@ -189,6 +189,13 @@ int degrePolynome(Polynome p);
  * @param z Complex - The complex number to evaluate the polynome at.
  * @return Complexe - The result of the evaluation?
  */
-Complexe evaluatePolynome(Polynome p, Complexe z);
+/**
+ * @brief Evaluate the polynome by a Matrice.
+ * 
+ * @param p Polynome - The polynome to evaluate.
+ * @param m Matrice - The matrice to evaluate the polynome by.
+ * @return Matrice - The result of the evaluation.
+ */
+Matrice evaluatePolynomeMatrice(Polynome p, Matrice m);
 
 #endif
