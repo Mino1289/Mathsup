@@ -33,8 +33,8 @@ Matrice powerMatrice(Matrice m, int n);
  * @brief Calculate the trace of a Matrice object
  *
  * @param m Matrice - the Matrice object to calculate the trace 
- * @return double - the trace of the matrice
+ * @return Complex - the trace of the matrice
  */
-double traceMatrice(Matrice m);
+Complexe traceMatrice(Matrice m);
 
 #endif

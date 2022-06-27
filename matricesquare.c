@@ -3,14 +3,14 @@
 Matrice eye(int order) {
     Matrice m = createAndInitializeMatrice(order, order);
     for (int i = 0; i < order; i++) {
-        m.table[i][i] = 1;
+        m.table[i][i] = (Complexe) {1, 0};
     }
     return m;
 }
 
 Matrice invertMatrice(Matrice m) {
     Matrice a = createAndInitializeMatrice(m.cols, m.cols*2);
-    double ratio;
+    Complexe ratio;
     int size = m.cols;
 
     for (int i = 0; i < size; i++) {
@@ -23,24 +23,24 @@ Matrice invertMatrice(Matrice m) {
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
             if (i == j) {
-                a.table[i][j + size] = 1;
+                a.table[i][j + size] = (Complexe) {1, 0};
             } else {
-                a.table[i][j + size] = 0;
+                a.table[i][j + size] = (Complexe) {0, 0};
             }
         }
     }
 
     /* Applying Gauss Jordan Elimination */
     for (int i = 0; i < size; i++) {
-        if (a.table[i][i] == 0.0) {
+        if (a.table[i][i].real == 0.0 && a.table[i][i].imag == 0.0) {
             fprintf(stderr, "ERROR: Mathematical Error %d!", i);
             exit(0);
         }
         for (int j = 0; j < size; j++) {
             if (i != j) {
-                ratio = a.table[j][i] / a.table[i][i];
+                ratio = divComplexebyComplexe(a.table[j][i], a.table[i][i]);
                 for (int k = 0; k < 2 * size; k++) {
-                    a.table[j][k] = a.table[j][k] - ratio * a.table[i][k];
+                    a.table[j][k] = subComplexe(a.table[j][k], multComplexebyComplexe(ratio, a.table[i][k]));
                 }
             }
         }
@@ -48,7 +48,7 @@ Matrice invertMatrice(Matrice m) {
     /* Row Operation to Make Principal Diagonal to 1 */
     for (int i = 0; i < size; i++) {
         for (int j = size; j < 2 * size; j++) {
-            a.table[i][j] = a.table[i][j] / a.table[i][i];
+            a.table[i][j] = divComplexebyComplexe(a.table[i][j], a.table[i][i]);
         }
     }
     Matrice B = createAndInitializeMatrice(size, size);
@@ -96,10 +96,10 @@ Matrice powerMatrice(Matrice m, int n) {
     return a;
 }
 
-double traceMatrice(Matrice m) {
-    double trace = 0;
+Complexe traceMatrice(Matrice m) {
+    Complexe trace = (Complexe) {0, 0};
     for (int i = 0; i < m.cols; i++) {
-        trace += m.table[i][i];
+        trace = addComplexe(trace, m.table[i][i]);
     }
     return trace;
 }

@@ -3,11 +3,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <complexe.h>
 
+/**
+ * @brief A struct representing a matrix.
+ * 
+ * @param rows The number of rows.
+ * @param cols The number of columns.
+ * @param table The table of complexes. 
+ */
 typedef struct Matrice {
     int rows;
     int cols;
-    double** table;
+    Complexe** table;
 } Matrice;
 
 /**
@@ -67,6 +75,24 @@ Matrice subMatrice(Matrice m1, Matrice m2);
  * @return Matrice - The multiplication of the two matrices
  */
 Matrice multMatrice(Matrice m1, Matrice m2);
+
+/**
+ * @brief Multiply a Matrice object by a scalar
+ * 
+ * @param m Matrice - the Matrice object
+ * @param scalar double - the scalar
+ * @return Matrice product of the matrice and the scalar.
+ */
+Matrice multMatricebyScalar(Matrice m, double scalar);
+
+/**
+ * @brief Multiply a Matrice object by a Complex
+ * 
+ * @param m Matrice - the Matrice object
+ * @param z Complexe - the Complexe
+ * @return Matrice The product of the matrice and the complex.
+ */
+Matrice multMatricebyComplex(Matrice m, Complexe z);
 
 /**
  * @brief Copy a Matrice object into another one (who will be initialized).

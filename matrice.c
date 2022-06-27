@@ -2,17 +2,17 @@
 
 
 Matrice createAndInitializeMatrice(int rows, int cols) {
-    double** matrice = (double**) malloc(rows * sizeof(double*));
+    Complexe** matrice = (Complexe**) malloc(rows * sizeof(Complexe*));
     if (matrice == NULL) {
         fprintf(stderr, "ERROR: Could not allocate memory for matrice.\n");
         Matrice M = {0, 0, NULL};
         return M;
     }
     for (int i = 0; i < rows; i++) {
-        matrice[i] = (double*) malloc(cols * sizeof(double));
+        matrice[i] = (Complexe*) malloc(cols * sizeof(Complexe));
         if (matrice[i] != NULL) {
             for (int j = 0; j < cols; j++) {
-                matrice[i][j] = 0;
+                matrice[i][j] = (Complexe) {0, 0};
             }
         } else {
             fprintf(stderr, "ERROR: Could not allocate memory for matrice[%d]\nFreeing the previous matrice\n", i);
@@ -31,7 +31,10 @@ void fillMatrice(Matrice m) {
     for (int i = 0; i < m.rows; i++) {
         for (int j = 0; j < m.cols; j++) {
             printf("A[%d][%d] = ", i, j);
-            scanf("%lf", &(m.table[i][j]));
+            scanf("%lf", &(m.table[i][j].real));
+            fflush(stdin);
+            printf("+ i*");
+            scanf("%lf", &(m.table[i][j].imag));
             fflush(stdin);
         }
     }
@@ -41,10 +44,12 @@ void printMatrice(Matrice m) {
     printf("\n");
     for (int i = 0; i < m.rows; i++) {
         for (int j = 0; j < m.cols; j++) {
-            printf("%.2f ", m.table[i][j]);
+            printComplexe(m.table[i][j], False, False, True);
+            printf("\t");
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 Matrice transposeMatrice(Matrice m) {
@@ -65,7 +70,7 @@ Matrice addMatrice(Matrice m1, Matrice m2) {
     Matrice newMatrice = createAndInitializeMatrice(m1.rows, m1.cols);
     for (int i = 0; i < m1.rows; i++) {
         for (int j = 0; j < m1.cols; j++) {
-            newMatrice.table[i][j] = m1.table[i][j] + m2.table[i][j];
+            newMatrice.table[i][j] = addComplexe(m1.table[i][j], m2.table[i][j]);
         }
     }
     return newMatrice;
@@ -79,7 +84,7 @@ Matrice subMatrice(Matrice m1, Matrice m2) {
     Matrice newMatrice = createAndInitializeMatrice(m1.rows, m1.cols);
     for (int i = 0; i < m1.rows; i++) {
         for (int j = 0; j < m1.cols; j++) {
-            newMatrice.table[i][j] = m1.table[i][j] - m2.table[i][j];
+            newMatrice.table[i][j] = subComplexe(m1.table[i][j], m2.table[i][j]);
         }
     }
     return newMatrice;
@@ -94,11 +99,29 @@ Matrice multMatrice(Matrice m1, Matrice m2) {
     for (int i = 0; i < m1.rows; i++) {
         for (int j = 0; j < m2.cols; j++) {
             for (int k = 0; k < m1.cols; k++) {
-                newMatrice.table[i][j] += m1.table[i][k] * m2.table[k][j];
+                newMatrice.table[i][j] = addComplexe(newMatrice.table[i][j], multComplexebyComplexe(m1.table[i][k], m2.table[k][j]));
             }
         }
     }
     return newMatrice;
+}
+
+Matrice multMatricebyScalar(Matrice m, double scalar) {
+    for (int i = 0; i < m.rows; i++) {
+        for (int j = 0; j < m.cols; j++) {
+            m.table[i][j] = multComplexebyScalar(m.table[i][j], scalar);
+        }
+    }
+    return m;
+}
+
+Matrice multMatricebyComplex(Matrice m, Complexe z) {
+    for (int i = 0; i < m.rows; i++) {
+        for (int j = 0; j < m.cols; j++) {
+            m.table[i][j] = multComplexebyComplexe(m.table[i][j], z);
+        }
+    }
+    return m;
 }
 
 Matrice copyMatrice(Matrice m) {
