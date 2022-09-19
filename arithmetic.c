@@ -26,7 +26,7 @@ Boolean isPrime(int n) {
         return False;
     }
     int nmax = sqrt(n)+1;
-    for (int i = 3; i < nmax; i += 2) {
+    FOR(i, 3, nmax, 2) {
         if (n % i == 0) {
             return False;
         }

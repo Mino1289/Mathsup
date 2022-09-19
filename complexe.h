@@ -6,10 +6,40 @@
 #include <string.h>
 #include <math.h>
 
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define ABS(a) ((a) < 0 ? -(a) : (a))
-#define SWAP(a, b, T) { T tmp = a; a = b; b = tmp; }
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define uld unsigned long double
+
+#define ABS(a)      ((a) < 0 ? -(a) : (a))
+#define MAX(a, b)   ((a + b + ABS(a-b)) / 2)
+#define MIN(a, b)   ((a) < (b) ? (a) : (b))
+#define SWAP(a, b, T)  {T tmp = a; a = b; b = tmp;}
+#define SWAPI(arr, i, j, T) {SWAP(arr[i], arr[j], T);}
+
+
+#define F_OR(i, a, b, s)            for (int i = (a); (s) > 0 ? i < (b) : i > (b); i += (s))
+#define F_OR1(e)                    F_OR(i, 0, e, 1)
+#define F_OR2(i, e)                 F_OR(i, 0, e, 1)
+#define F_OR3(i, b, e)              F_OR(i, b, e, 1)
+#define F_OR4(i, b, e, s)           F_OR(i, b, e, s)
+#define GET5(a, b, c, d, e, ...)    e
+#define F_ORC(...)                  GET5(__VA_ARGS__, F_OR4, F_OR3, F_OR2, F_OR1)
+/**
+ * @brief max 4 arguments \n
+ * First : the name of the variable the i in 'for (int i = 0; i < n; i++)' (if ommited 'i') (the last to be ommited) \n
+ * Second : the start of the loop   (if ommited 0)      (the second to be ommited) \n
+ * Third : the end of the loop      (can't be ommited)   \n
+ * Fourth : the step of the loop    (if ommited 1)      (the first to be ommited) \n
+ */
+#define FOR(...) F_ORC(__VA_ARGS__)(__VA_ARGS__)
+
+#ifdef DEBUG
+#define DEBUGPRINT(_msg, ...) fprintf(stderr, ".\\%s:%d " _msg, __FILE__, __LINE__, ##__VA_ARGS__);
+#else
+#define DEBUGPRINT(_msg, ...) // do nothing
+#endif
+
 
 /**
  * @brief Complexe structure,

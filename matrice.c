@@ -8,15 +8,15 @@ Matrice createAndInitializeMatrice(int rows, int cols) {
         Matrice M = {0, 0, NULL};
         return M;
     }
-    for (int i = 0; i < rows; i++) {
+    FOR(i,rows) {
         matrice[i] = (Complexe*) malloc(cols * sizeof(Complexe));
         if (matrice[i] != NULL) {
-            for (int j = 0; j < cols; j++) {
+            FOR(j, cols) {
                 matrice[i][j] = (Complexe) {0, 0};
             }
         } else {
             fprintf(stderr, "ERROR: Could not allocate memory for matrice[%d]\nFreeing the previous matrice\n", i);
-            for (int j = 0; j < i; j++) {
+            FOR(j, i) {
                 free(matrice[j]);
             }
             free(matrice);
@@ -28,8 +28,8 @@ Matrice createAndInitializeMatrice(int rows, int cols) {
 }
 
 void fillMatrice(Matrice m) {
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             printf("A[%d][%d] = ", i, j);
             fillComplexe(&m.table[i][j]);
         }
@@ -38,8 +38,8 @@ void fillMatrice(Matrice m) {
 
 void printMatrice(Matrice m) {
     printf("\n");
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             printComplexe(m.table[i][j], False, False, True);
             printf("\t");
         }
@@ -50,8 +50,8 @@ void printMatrice(Matrice m) {
 
 Matrice transposeMatrice(Matrice m) {
     Matrice newMatrice = createAndInitializeMatrice(m.cols, m.rows);
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             newMatrice.table[j][i] = m.table[i][j];
         }
     }
@@ -64,8 +64,8 @@ Matrice addMatrice(Matrice m1, Matrice m2) {
         return (Matrice){0, 0, NULL};
     }
     Matrice newMatrice = createAndInitializeMatrice(m1.rows, m1.cols);
-    for (int i = 0; i < m1.rows; i++) {
-        for (int j = 0; j < m1.cols; j++) {
+    FOR(i, m1.rows) {
+        FOR(j, m1.cols) {
             newMatrice.table[i][j] = addComplexe(m1.table[i][j], m2.table[i][j]);
         }
     }
@@ -78,8 +78,8 @@ Matrice subMatrice(Matrice m1, Matrice m2) {
         return (Matrice){0, 0, NULL};
     }
     Matrice newMatrice = createAndInitializeMatrice(m1.rows, m1.cols);
-    for (int i = 0; i < m1.rows; i++) {
-        for (int j = 0; j < m1.cols; j++) {
+    FOR(i, m1.rows) {
+        FOR(j, m1.cols) {
             newMatrice.table[i][j] = subComplexe(m1.table[i][j], m2.table[i][j]);
         }
     }
@@ -92,9 +92,9 @@ Matrice multMatrice(Matrice m1, Matrice m2) {
         return (Matrice){0, 0, NULL};
     }
     Matrice newMatrice = createAndInitializeMatrice(m1.rows, m2.cols);
-    for (int i = 0; i < m1.rows; i++) {
-        for (int j = 0; j < m2.cols; j++) {
-            for (int k = 0; k < m1.cols; k++) {
+    FOR(i, m1.rows) {
+        FOR(j, m2.cols) {
+            FOR(k, m1.cols) {
                 newMatrice.table[i][j] = addComplexe(newMatrice.table[i][j], multComplexebyComplexe(m1.table[i][k], m2.table[k][j]));
             }
         }
@@ -103,8 +103,8 @@ Matrice multMatrice(Matrice m1, Matrice m2) {
 }
 
 Matrice multMatricebyScalar(Matrice m, double scalar) {
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             m.table[i][j] = multComplexebyScalar(m.table[i][j], scalar);
         }
     }
@@ -112,8 +112,8 @@ Matrice multMatricebyScalar(Matrice m, double scalar) {
 }
 
 Matrice multMatricebyComplex(Matrice m, Complexe z) {
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             m.table[i][j] = multComplexebyComplexe(m.table[i][j], z);
         }
     }
@@ -122,8 +122,8 @@ Matrice multMatricebyComplex(Matrice m, Complexe z) {
 
 Matrice copyMatrice(Matrice m) {
     Matrice newMatrice = createAndInitializeMatrice(m.rows, m.cols);
-    for (int i = 0; i < m.rows; i++) {
-        for (int j = 0; j < m.cols; j++) {
+    FOR(i, m.rows) {
+        FOR(j, m.cols) {
             newMatrice.table[i][j] = m.table[i][j];
         }
     }
@@ -132,7 +132,7 @@ Matrice copyMatrice(Matrice m) {
 
 void freeMatrice(Matrice* m) {
     if (m->table != NULL) {
-        for (int i = 0; i < m->rows; i++) {
+        FOR(i, m->rows) {
             if (m->table[i] != NULL) {
                 free(m->table[i]);
             }

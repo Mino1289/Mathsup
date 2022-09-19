@@ -2,7 +2,7 @@
 
 Matrice eye(int order) {
     Matrice m = createAndInitializeMatrice(order, order);
-    for (int i = 0; i < order; i++) {
+    FOR(order) {
         m.table[i][i] = (Complexe) {1, 0};
     }
     return m;
@@ -13,15 +13,15 @@ Matrice invertMatrice(Matrice m) {
     Complexe ratio;
     int size = m.cols;
 
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    FOR(i, size) {
+        FOR(j, size) {
             a.table[i][j] = m.table[i][j];
         }
     }
 
     /* Augmenting Identity Matrix of Order size */
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    FOR(i, size) {
+        FOR(j, size) {
             if (i == j) {
                 a.table[i][j + size] = (Complexe) {1, 0};
             } else {
@@ -31,29 +31,29 @@ Matrice invertMatrice(Matrice m) {
     }
 
     /* Applying Gauss Jordan Elimination */
-    for (int i = 0; i < size; i++) {
+    FOR(i, size) {
         if (a.table[i][i].real == 0.0 && a.table[i][i].imag == 0.0) {
             fprintf(stderr, "ERROR: Mathematical Error %d!", i);
             exit(0);
         }
-        for (int j = 0; j < size; j++) {
+        FOR(j, size) {
             if (i != j) {
                 ratio = divComplexebyComplexe(a.table[j][i], a.table[i][i]);
-                for (int k = 0; k < 2 * size; k++) {
+                FOR(k, 2 * size) {
                     a.table[j][k] = subComplexe(a.table[j][k], multComplexebyComplexe(ratio, a.table[i][k]));
                 }
             }
         }
     }
     /* Row Operation to Make Principal Diagonal to 1 */
-    for (int i = 0; i < size; i++) {
-        for (int j = size; j < 2 * size; j++) {
+    FOR(i, size) {
+        FOR(j, 2 * size) {
             a.table[i][j] = divComplexebyComplexe(a.table[i][j], a.table[i][i]);
         }
     }
     Matrice B = createAndInitializeMatrice(size, size);
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
+    FOR(i, size) {
+        FOR(j, size) {
             B.table[i][j] = a.table[i][j + size];
         }
     }
@@ -77,18 +77,10 @@ Matrice powerMatrice(Matrice m, int n) {
     
     if (n < 0) {
         a = invertMatrice(a);
-        for (int i = 0; i < nbf; i++) {
-            Matrice b = copyMatrice(a);
-            for (int j = 0; j < f[i]-1; j++) {
-                a = multMatrice(a, b);
-            }
-            freeMatrice(&b);
-        }
-        return a;
     }
-    for (int i = 0; i < nbf; i++) {
+    FOR(nbf) {
         Matrice b = copyMatrice(a);
-        for (int j = 0; j < f[i]-1; j++) {
+        FOR(j, f[i] - 1) {
             a = multMatrice(a, b);
         }
         freeMatrice(&b);
@@ -98,7 +90,7 @@ Matrice powerMatrice(Matrice m, int n) {
 
 Complexe traceMatrice(Matrice m) {
     Complexe trace = (Complexe) {0, 0};
-    for (int i = 0; i < m.cols; i++) {
+    FOR(m.cols) {
         trace = addComplexe(trace, m.table[i][i]);
     }
     return trace;

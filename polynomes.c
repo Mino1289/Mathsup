@@ -20,7 +20,7 @@ void printMonome(Monome m, Boolean first) {
 }
 
 void printPolynome(Polynome p) {
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(p.nbMonomes) {
         printMonome(p.monomes[i], i==0);
     }
     printf("\n");
@@ -35,8 +35,8 @@ void simplifyPolynome(Polynome *p) {
     reorderPolynome(p);
     //merge the monome with the same degree
     int newNbMonomes = p->nbMonomes;
-    for (int i = 0; i < p->nbMonomes; i++) {
-        for (int j = i + 1; j < p->nbMonomes; j++) {
+    FOR(i, p->nbMonomes) {
+        FOR(j, i+1, p->nbMonomes) {
             if (p->monomes[i].degre == p->monomes[j].degre) {
                 p->monomes[i].coeff = addComplexe(p->monomes[i].coeff, p->monomes[j].coeff);
                 p->monomes[j].coeff.real = 0;
@@ -49,9 +49,9 @@ void simplifyPolynome(Polynome *p) {
     p->monomes = realloc(p->monomes, newNbMonomes * sizeof(Monome));
 
     //remove the monome with a coeff of 0
-    for (int i = 0; i < p->nbMonomes; i++) {
+    FOR(i, p->nbMonomes) {
         if (p->monomes[i].coeff.real == 0 && p->monomes[i].coeff.imag == 0) {
-            for (int j = i; j < p->nbMonomes - 1; j++) {
+            FOR(j, i, p->nbMonomes-1) {
                 p->monomes[j] = p->monomes[j + 1];
             }
             p->nbMonomes--;
@@ -60,9 +60,9 @@ void simplifyPolynome(Polynome *p) {
     }
     p->monomes = realloc(p->monomes, p->nbMonomes * sizeof(Monome));
     //remove the monome with a negative degree
-    for (int i = 0; i < p->nbMonomes; i++) {
+    FOR(i, p->nbMonomes) {
         if (p->monomes[i].degre < 0) {
-            for (int j = i; j < p->nbMonomes - 1; j++) {
+            FOR(j, i, p->nbMonomes-1) {
                 p->monomes[j] = p->monomes[j + 1];
             }
             p->nbMonomes--;
@@ -72,20 +72,15 @@ void simplifyPolynome(Polynome *p) {
     p->monomes = realloc(p->monomes, p->nbMonomes * sizeof(Monome));
 }
 
-void swap(Polynome p, int index1, int index2) {
-    Monome temp = p.monomes[index1];
-    p.monomes[index1] = p.monomes[index2];
-    p.monomes[index2] = temp;
-}
 
 void reorderPolynome(Polynome *p) {
     Boolean weswap;
     int loop = 0;
     do {
         weswap = False;
-        for (int i = 0; i < (p->nbMonomes - 1 - loop); i++) {
+        FOR(i, p->nbMonomes - 1 - loop) {
             if (p->monomes[i].degre > p->monomes[i + 1].degre) {
-                swap(*p, i, i + 1);
+                SWAPI(p->monomes, i, i + 1, Monome);
                 weswap = True;
             }
         }
@@ -98,9 +93,9 @@ void inverseorderPolynome(Polynome *p) {
     int loop = 0;
     do {
         weswap = False;
-        for (int i = 0; i < (p->nbMonomes - 1 - loop); i++) {
+        FOR(i, p->nbMonomes - 1 - loop) {
             if (p->monomes[i].degre < p->monomes[i + 1].degre) {
-                swap(*p, i, i + 1);
+                SWAPI(p->monomes, i, i + 1, Monome);
                 weswap = True;
             }
         }
@@ -111,7 +106,7 @@ void inverseorderPolynome(Polynome *p) {
 Polynome copyPolynome(Polynome p) {
     Polynome newP = {p.nbMonomes, NULL};
     newP.monomes = malloc(newP.nbMonomes * sizeof(Monome));
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(p.nbMonomes) {
         newP.monomes[i] = p.monomes[i];
     }
     return newP;
@@ -120,12 +115,12 @@ Polynome copyPolynome(Polynome p) {
 Polynome addPolynomes(Polynome p1, Polynome p2) {
     int size = p1.nbMonomes + p2.nbMonomes;
     Monome *monomes = (Monome*) malloc(size * sizeof(Monome));
-    int i = 0,j;
-    for (j = 0; j < p1.nbMonomes; j++) {
+    int i = 0;
+    FOR(j, p1.nbMonomes) {
         monomes[i] = p1.monomes[j];
         i++;
     }
-    for (j = 0; j < p2.nbMonomes; j++) {
+    FOR(j, p2.nbMonomes) {
         monomes[i] = p2.monomes[j];
         i++;
     }
@@ -137,12 +132,12 @@ Polynome addPolynomes(Polynome p1, Polynome p2) {
 Polynome subPolynomes(Polynome p1, Polynome p2) {
     int size = p1.nbMonomes + p2.nbMonomes;
     Monome *monomes = (Monome*) malloc(size * sizeof(Monome));
-    int i = 0,j;
-    for (j = 0; j < p1.nbMonomes; j++) {
+    int i = 0;
+    FOR(j, p1.nbMonomes) {
         monomes[i] = p1.monomes[j];
         i++;
     }
-    for (j = 0; j < p2.nbMonomes; j++) {
+    FOR(j, p2.nbMonomes) {
         monomes[i] = p2.monomes[j];
         monomes[i].coeff = multComplexebyScalar(monomes[i].coeff, -1);
         i++;
@@ -154,7 +149,7 @@ Polynome subPolynomes(Polynome p1, Polynome p2) {
 
 Polynome multPolynomebyScalar(Polynome p, Complexe z) {
     Polynome t = copyPolynome(p);
-    for (int i = 0; i < t.nbMonomes; i++) {
+    FOR(t.nbMonomes) {
         t.monomes[i].coeff = multComplexebyComplexe(t.monomes[i].coeff, z);
     }
     simplifyPolynome(&t);
@@ -165,11 +160,11 @@ Polynome multPolynomebyMonome(Polynome p, Monome m) {
     Polynome t;
     t.nbMonomes = p.nbMonomes;
     t.monomes = (Monome*) malloc(t.nbMonomes * sizeof(Monome));
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(i, t.nbMonomes) {
         t.monomes[i] = p.monomes[i];
     }
 
-    for (int j = 0; j < t.nbMonomes; j++) {
+    FOR(j, t.nbMonomes) {
         t.monomes[j].coeff = multComplexebyComplexe(t.monomes[j].coeff, m.coeff);
         t.monomes[j].degre += m.degre;
     }
@@ -180,9 +175,9 @@ Polynome multPolynomebyMonome(Polynome p, Monome m) {
 Polynome multPolynomebyPolynome(Polynome p1, Polynome p2) {
     int size = p1.nbMonomes * p2.nbMonomes;
     Monome* monomes = (Monome*) malloc(size * sizeof(Monome));
-    int i = 0,j,k;
-    for (j = 0; j < p1.nbMonomes; j++) {
-        for (k = 0; k < p2.nbMonomes; k++) {
+    int i = 0;
+    FOR(j, p1.nbMonomes) {
+        FOR(k, p2.nbMonomes) {
             monomes[i] = p1.monomes[j];
             monomes[i].coeff = multComplexebyComplexe(monomes[i].coeff, p2.monomes[k].coeff);
             monomes[i].degre += p2.monomes[k].degre;
@@ -212,7 +207,7 @@ void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
     int size = p2.nbMonomes;
     Monome *monomes = (Monome*) malloc(size * sizeof(Monome)); // will go to q
     
-    for (int i = 0; i < size; i++) {
+    FOR(size) {
         monomes[i] = divMonomebyMonome(rst.monomes[0], m);
         rst = subPolynomes(rst, multPolynomebyMonome(p2, monomes[i]));
         simplifyPolynome(&rst);
@@ -249,7 +244,7 @@ Polynome gcdPolynome(Polynome p1, Polynome p2) {
 
 Polynome derivePolynome(Polynome *p) {
     int size = p->nbMonomes;
-    for (int i = 0; i < size; i++) {
+    FOR(size) {
         p->monomes[i].coeff = multComplexebyScalar(p->monomes[i].coeff, (double) p->monomes[i].degre);
         if (p->monomes[i].degre > 0) {
             p->monomes[i].degre--;
@@ -261,7 +256,7 @@ Polynome derivePolynome(Polynome *p) {
 
 int degrePolynome(Polynome p) {
     int degre = -1;
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(p.nbMonomes) {
         if (p.monomes[i].degre > degre) {
             degre = p.monomes[i].degre;
         }
@@ -271,7 +266,7 @@ int degrePolynome(Polynome p) {
 
 Complexe evaluatePolynomeComplex(Polynome p, Complexe z) {
     Complexe result = {0, 0};
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(p.nbMonomes) {
         result = addComplexe(result, multComplexebyComplexe(p.monomes[i].coeff, powerComplexe(z, p.monomes[i].degre)));
     }
     return result;
@@ -283,7 +278,7 @@ Matrice evaluatePolynomeMatrice(Polynome p, Matrice m) {
         return m;
     }
     Matrice result = createAndInitializeMatrice(m.rows, m.cols);
-    for (int i = 0; i < p.nbMonomes; i++) {
+    FOR(m.rows) {
         result = addMatrice(result, multMatricebyComplex(powerMatrice(m, p.monomes[i].degre), p.monomes[i].coeff));
     }
     return result;

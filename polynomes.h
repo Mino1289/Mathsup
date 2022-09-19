@@ -60,15 +60,6 @@ void freePolynome(Polynome *p);
  */
 void simplifyPolynome(Polynome *p);
 
-/** 
- * @brief Swap the value at the index index1 with the value at the index index2.
- * 
- * @param p Polynome - The polynome to swap the monomes in.
- * @param index1 int - The index of the first value to swap.
- * @param index2 int - The index of the second value to swap.
- */
-void swap(Polynome p, int index1, int index2);
-
 /**
  * @brief Implement a bubble sort on the Polynome to sort the monomes by degree.
  * Smallest degree first.
