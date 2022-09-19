@@ -81,9 +81,7 @@ void fillComplexe(Complexe *z);
  * @param x double - The double to check.
  * @return Boolean 
  */
-Boolean isdoubleint(double x){
-    return (x == (int)x);
-}
+Boolean isdoubleint(double x);
 
 /**
  * @brief Add two complexes.
