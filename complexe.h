@@ -76,6 +76,16 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
 void fillComplexe(Complexe *z);
 
 /**
+ * @brief Checks if a double is an integer.
+ * 
+ * @param x double - The double to check.
+ * @return Boolean 
+ */
+Boolean isdoubleint(double x){
+    return (x == (int)x);
+}
+
+/**
  * @brief Add two complexes.
  * 
  * @param z1 Complexe - First complexe.
