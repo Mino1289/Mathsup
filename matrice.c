@@ -31,11 +31,7 @@ void fillMatrice(Matrice m) {
     for (int i = 0; i < m.rows; i++) {
         for (int j = 0; j < m.cols; j++) {
             printf("A[%d][%d] = ", i, j);
-            scanf("%lf", &(m.table[i][j].real));
-            fflush(stdin);
-            printf("+ i*");
-            scanf("%lf", &(m.table[i][j].imag));
-            fflush(stdin);
+            fillComplexe(&m.table[i][j]);
         }
     }
 }

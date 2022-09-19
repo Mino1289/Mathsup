@@ -43,6 +43,16 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
     }    
 }
 
+void fillComplexe(Complexe *z) {
+    printf("Real + i*Imaginary : ");
+    scanf("%lf", &(z->real));
+    fflush(stdin);
+    printf("+ i*");
+    scanf("%lf", &(z->imag));
+    fflush(stdin);
+    printf("\n");
+}
+
 Complexe addComplexe(Complexe z1, Complexe z2) {
     Complexe z;
     z.real = z1.real + z2.real;

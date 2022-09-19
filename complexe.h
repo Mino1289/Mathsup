@@ -38,6 +38,12 @@ typedef enum Boolean {
  */
 void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfirstsign);
 
+/**
+ * @brief Fill a Complexe.
+ * 
+ * @param z Complexe* - Complexe to fill.
+ */
+void fillComplexe(Complexe *z);
 
 /**
  * @brief Add two complexes.
