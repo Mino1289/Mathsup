@@ -32,7 +32,7 @@ void freePolynome(Polynome *p) {
 }
 
 void simplifyPolynome(Polynome *p) {
-    reorderPolynome(p);
+    reorderPolynome(p, True);
     //merge the monome with the same degree
     int newNbMonomes = p->nbMonomes;
     FOR(i, p->nbMonomes) {
@@ -73,28 +73,13 @@ void simplifyPolynome(Polynome *p) {
 }
 
 
-void reorderPolynome(Polynome *p) {
+void reorderPolynome(Polynome *p, Boolean reverse) {
     Boolean weswap;
     int loop = 0;
     do {
         weswap = False;
         FOR(i, p->nbMonomes - 1 - loop) {
-            if (p->monomes[i].degre > p->monomes[i + 1].degre) {
-                SWAPI(p->monomes, i, i + 1, Monome);
-                weswap = True;
-            }
-        }
-        loop++;
-    } while (weswap);
-}
-
-void inverseorderPolynome(Polynome *p) {
-    Boolean weswap;
-    int loop = 0;
-    do {
-        weswap = False;
-        FOR(i, p->nbMonomes - 1 - loop) {
-            if (p->monomes[i].degre < p->monomes[i + 1].degre) {
+            if (reverse ? p->monomes[i].degre > p->monomes[i + 1].degre : p->monomes[i].degre < p->monomes[i + 1].degre) {
                 SWAPI(p->monomes, i, i + 1, Monome);
                 weswap = True;
             }
@@ -198,8 +183,8 @@ Monome divMonomebyMonome(Monome m1, Monome m2) {
 
 
 void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
-    inverseorderPolynome(&p1);
-    inverseorderPolynome(&p2);
+    reorderPolynome(&p1, False);
+    reorderPolynome(&p2, False);
     
     Monome m = p2.monomes[0];
     Polynome rst = copyPolynome(p1);
@@ -211,17 +196,17 @@ void divPolynomebyPolynome(Polynome p1, Polynome p2, Polynome *q, Polynome *r) {
         monomes[i] = divMonomebyMonome(rst.monomes[0], m);
         rst = subPolynomes(rst, multPolynomebyMonome(p2, monomes[i]));
         simplifyPolynome(&rst);
-        inverseorderPolynome(&rst);
+        reorderPolynome(&rst, False);
     }
 
     q->nbMonomes = size;
     q->monomes = monomes;
 
     simplifyPolynome(q);
-    inverseorderPolynome(q);
+    reorderPolynome(q, False);
 
     simplifyPolynome(&rst);
-    inverseorderPolynome(&rst);
+    reorderPolynome(&rst, False);
 
     *r = rst;
 }

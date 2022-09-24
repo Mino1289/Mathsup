@@ -66,15 +66,7 @@ void simplifyPolynome(Polynome *p);
  *  
  * @param p Polynome* - The polynome to order.
  */
-void reorderPolynome(Polynome *p);
-
-/**
- * @brief Implement a bubble sort on the Polynome to sort the monomes by degree.
- * Biggest degree first.
- * 
- * @param p Polynome* - The polynome to order.
- */
-void inverseorderPolynome(Polynome *p);
+void reorderPolynome(Polynome *p, Boolean reverse);
 
 /**
  * @brief Copy a Polynome.

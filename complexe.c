@@ -54,6 +54,9 @@ void printComplexe(Complexe z, Boolean wparenthesis, Boolean wspace, Boolean wfi
             }
         }
     }
+    if (z.real == 0 && z.imag == 0) {
+        printf("0");
+    }
     if (wparenthesis) {
         printf(")");
     }    
